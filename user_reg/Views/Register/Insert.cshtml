@@ -1,0 +1,112 @@
+﻿@model user_reg.Models.Registration
+
+@{
+    ViewData["Title"] = "Insert";
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<h4>Registration</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label id="lblMessage" class="text-danger"></label>
+        </div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <div asp-validation-for="Name" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Age" class="control-label"></label>
+            <input asp-for="Age" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PhoneNum" class="control-label"></label>
+            <input asp-for="PhoneNum" class="form-control"  />
+            <span asp-validation-for="PhoneNum" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-default" onclick="Insert()" />
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    })
+    var email = document.getElementById("Email");
+    //var atposition = email.indexOf("@@");
+    //var dotposition = email.lastIndexOf(".");
+
+    var Num = document.getElementById("PhoneNum");
+    function Validation() {
+        //if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= x.length) {
+        //    alert("Please enter a valid e-mail address ");
+        //    return false;
+        //}
+        //else if (isNaN(Num)) {
+        if (isNaN(Num)) {
+            alert("Please enter numbers in phone number");
+            $("#PhoneNum").focus();
+            return false;
+        }
+    }
+    function Clear() {
+        $("#Name").val("")
+        $("#Age").val("")
+        $("#PhoneNum").val("")
+        $("#Email").val("")
+    }
+    function Insert() {
+        debugger
+        var Num = document.getElementById("PhoneNum");
+        if (isNaN($("#PhoneNum").val()) == true) {
+            debugger
+            $("#lblMessage").text("Please enter numbers in phone number");
+            $("#PhoneNum").focus();
+            return false;
+        }
+        var formData = new FormData();
+        formData.append("Name", $("#Name").val());
+        formData.append("Age", $("#Age").val());
+        formData.append("PhoneNum", $("#PhoneNum").val());
+        formData.append("Email", $("#Email").val());
+        $.ajax({
+            url: "/Register/Create",
+            beforeSend: function () {
+
+            },
+            type: "Post",
+            data: formData,
+            contentType: false,
+            processData: false,
+            cache: false,
+
+            success: function (data) {
+                console.log(data)
+                debugger
+                if (data == true) {
+                    $("#lblMessage").text("Successfully Registered")
+                    Clear()
+                }
+                else {
+                    $("#lblMessage").text("Registration Failed! ")
+                }
+            },
+
+
+        });
+
+
+    }
+</script>

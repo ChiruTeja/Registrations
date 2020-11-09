@@ -21,4 +21,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\Source Code\MMS-DEV\MMS\Bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
